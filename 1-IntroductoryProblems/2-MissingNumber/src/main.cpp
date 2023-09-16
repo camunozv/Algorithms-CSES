@@ -4,20 +4,23 @@ using namespace std;
 int main()
 {
 
-    int numberOfElements = 0;
-    cin >> numberOfElements;
+    long int range = 0;
+    cin >> range;
 
-    int numbers[numberOfElements];
-    for (int i = 0; i < numberOfElements; i++)
+    int numbers[range - 1];
+    for (int i = 0; i < (range - 1); i++)
     {
         cin >> numbers[i];
     }
 
-    for (int i = 0; i < numberOfElements; i++)
+    int expectedTotal = ((range * (range + 1)) / 2);
+    int total = 0;
+    for (int i = 0; i < (range - 1); i++)
     {
-        cout << numbers[i] << " ";
+        total += numbers[i];
     }
 
-    cout << " " << endl;
+    cout << expectedTotal - total << endl;
+
     return 0;
 }
