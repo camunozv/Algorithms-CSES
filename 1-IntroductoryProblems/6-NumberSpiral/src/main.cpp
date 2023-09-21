@@ -3,24 +3,60 @@ using namespace std;
 
 int main()
 {
-    int searchTimes = 0;
+    unsigned long int searchTimes = 0;
     cin >> searchTimes;
-    int resultArray[searchTimes];
+    unsigned long int resultArray[searchTimes];
 
-    int i = 0;
+    unsigned long int row = 0;
+    unsigned long int column = 0;
+
+    unsigned long int i = 0;
     while (i < searchTimes)
     {
-        int coordinates[2];
-        cin >> coordinates[0]; // row position
-        cin >> coordinates[1]; // column position
+        cin >> row;
+        cin >> column;
 
-        int a = coordinates[0] * coordinates[0];
-        int b = coordinates[1] * coordinates[1];
+        unsigned long int squareSize = (row > column) ? row * row : column * column;
 
-        int squareSize = (a > b) ? a : b;
+        unsigned long int number = 0;
+        unsigned long int searchInterval = 0;
 
-        // Algorithm code here
+        if (squareSize % 2 == 0)
+        {
+            if (row > column)
+            {
+                searchInterval = squareSize;
+                number = searchInterval - column + 1;
+            }
+            else
+            {
+                searchInterval = squareSize - ((2 * column) - 2);
+                number = searchInterval + row - 1;
+            }
+        }
+        else
+        {
+            if (row > column)
+            {
+                searchInterval = squareSize - ((2 * row) - 2);
+                number = searchInterval + column + 1;
+            }
+            else
+            {
+                searchInterval = squareSize;
+                number = searchInterval - row + 1;
+            }
+        }
+        // 925899389884479752
+        // 925899389884479754
+        resultArray[i] = number;
         i++;
     }
+
+    for (unsigned long int i = 0; i < searchTimes; i++)
+    {
+        cout << resultArray[i] << endl;
+    }
+// 962236661 36524152
     return 0;
 }
