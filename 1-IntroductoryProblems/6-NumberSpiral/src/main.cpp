@@ -39,7 +39,7 @@ int main()
             if (row > column)
             {
                 searchInterval = squareSize - ((2 * row) - 2);
-                number = searchInterval + column + 1;
+                number = searchInterval + column - 1;
             }
             else
             {
@@ -47,8 +47,7 @@ int main()
                 number = searchInterval - row + 1;
             }
         }
-        // 925899389884479752
-        // 925899389884479754
+
         resultArray[i] = number;
         i++;
     }
@@ -57,6 +56,6 @@ int main()
     {
         cout << resultArray[i] << endl;
     }
-// 962236661 36524152
+
     return 0;
 }
