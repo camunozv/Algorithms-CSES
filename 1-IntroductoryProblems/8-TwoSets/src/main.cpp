@@ -9,31 +9,31 @@ int main()
 
     bool isFactible = checkIfSolution(n);
 
-    if (isFactible)
+    if (n == 3)
     {
         cout << "YES" << endl;
-
-        // create array of numbers
-        long unsigned int array[n];
-        for (long unsigned int i = 0; i < n; i++)
-        {
-            array[i] = i + 1;
-        };
+        cout << "1" << endl;
+        cout << "3" << endl;
+        cout << "2" << endl;
+        cout << "2 1" << endl;
+    }
+    else if (isFactible)
+    {
+        cout << "YES" << endl;
 
         // get the sum we want to reach
         long unsigned int setSum = ((n) * (n + 1)) / 4;
 
         // create array where we want to save the combination
-        long unsigned int combination[n];
+        long unsigned int combination[(n / 2) + 1] = {0};
 
         // cycle which finds out pairs, first and last element pairs.
-        long unsigned int a = 0;
-        long unsigned int b = n - 1;
         long unsigned int i = 1;
-        long unsigned int superior = array[b];
-        long unsigned int inferior = array[a];
+        long unsigned int superior = n;
+        long unsigned int inferior = 1;
 
         long unsigned int sum = 0;
+        long unsigned int counter = 0;
 
         while (sum < setSum)
         {
@@ -41,46 +41,53 @@ int main()
             {
                 sum += superior;
                 combination[i - 1] = superior;
+                counter++;
             }
 
             if (sum != setSum)
             {
                 sum += inferior;
                 combination[i] = inferior;
+                counter++;
             }
 
-            b--;
-            a++;
-            superior = array[b];
-            inferior = array[a];
+            superior--;
+            inferior++;
             i += 2;
         }
 
         long unsigned int j = 0;
-        cout << i - 1 << endl;
-        while (j < i)
+        cout << counter << endl;
+
+        while (j < counter)
         {
             cout << combination[j] << " ";
             j++;
         }
 
-        long unsigned int l = array[i - 1] - 2;
-        // long unsigned int k = array[i - 2] - 2;
-
-        while (l < n)
-        {
-            combination[l] = array[l];
-            l++;
-        }
-        cout << "" << endl;
-        while (i < n)
-        {
-            cout << combination[i] << " ";
-            i++;
-        }
-
         cout << " " << endl;
-        cout << n - i + 1 << endl;
+        cout << n - counter << endl;
+
+        long unsigned int a = combination[counter - 1] < combination[counter - 2] ? combination[counter - 1] : combination[counter - 2];
+        long unsigned int b = combination[counter - 1] > combination[counter - 2] ? combination[counter - 1] : combination[counter - 2];
+
+        if (b < a)
+        {
+            while (b < a - 1)
+            {
+                b++;
+                cout << b << " ";
+            }
+        }
+        else
+        {
+            while (a < b - 1)
+            {
+                a++;
+                cout << a << " ";
+            }
+        }
+        cout << " " << endl;
     }
     else
     {
