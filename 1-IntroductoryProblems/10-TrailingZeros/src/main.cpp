@@ -23,7 +23,7 @@ int trailingZeros(LLUI nummer)
         while (product % 5 == 0)
         {
             zerosCounter++;
-            product = product / 5;
+            product /= 5;
         }
     }
 
