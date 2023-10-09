@@ -1,29 +1,50 @@
-#include <iostream>
+#include <bits/stdc++.h> // includes several standard libraries, including <iostream>
+#define LLUI unsigned long long int
 using namespace std;
 
+int trailingZeros(LLUI nummer);
 int main()
 {
-    long unsigned int n = 0;
+    LLUI n = 0;
     cin >> n;
 
-    cout << n / 5 << endl;
-    cout << n % 5 << endl;
-    cout << n / 2 << endl;
+    // Multiplicar hasta antesito de irme a overflow. Justo ahi contar el número de ceros. Guardar el resultado.
+    // Reiniciar la variable acumuladora a 1. Y empezar a multiplicar de nuevo donde me quedé. Así hasta el final
+    // del ciclo.
 
-    long unsigned int product = 1;
-    long unsigned int trailingZeros = 0;
+    // Puedo multiplicar los digitos cada 5 veces contar el número de veces que se divide el número por 10.
 
-    for (long unsigned int j = 1; j <= n; j++)
+    // ¿Cómo verificar antes de entrar a overflow?
+
+    cout << trailingZeros(n) << "\n";
+    cout << "Well done nigger \n";
+    return 0;
+}
+
+int trailingZeros(LLUI nummer)
+{
+
+    LLUI product = 1;
+    int zerosCounter = 0;
+
+    for (LLUI i = 5; i <= nummer; i += 5)
     {
-        if (product % 5 == 0 || product % 2 == 0)
+        product = (i) * (i - 1);
+        while (product % 10 == 0)
         {
-            trailingZeros++;
-            product = 1;
+            zerosCounter++;
+            product = product / 10;
         }
-        product *= j;
+
+        product = 1;
     }
 
-    cout << trailingZeros << endl;
+    // (a + b) mod m == (a mod m + b mod m) mod m
+    // (a - b) mod m == (a mod m - b mod m) mod m
+    // (a * b) mod m == (a mod m * b mod m) mod m
+    
+    // 8 * 9 * 50 == 3600
 
-    return 0;
+    // usar modulo 10 como un hijo de perra
+    return zerosCounter;
 }
