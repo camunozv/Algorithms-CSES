@@ -17,24 +17,25 @@ int main()
     {
         pair<long, long> testCase;
 
-        cin >> testCase.first;  // x
-        cin >> testCase.second; // y
+        cin >> testCase.first;
+        cin >> testCase.second;
 
         B = (testCase.first - (2 * testCase.second)) / -3;
         A = testCase.second - (2 * B);
-        
+
         solution1 = (2 * A) + B;
         solution2 = (2 * B) + A;
 
-        cout << solution1 << "\n";
-        cout << solution2 << "\n";
-
-        cout << A << "\n";
-        cout << B << "\n";
-
         if (solution1 == testCase.first && solution2 == testCase.second)
         {
-            cout << "YES\n";
+            if (A >= 0 && B >= 0)
+            {
+                cout << "YES\n";
+            }
+            else
+            {
+                cout << "NO\n";
+            }
         }
         else
         {
