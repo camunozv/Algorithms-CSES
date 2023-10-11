@@ -1,60 +1,48 @@
 #include <bits/stdc++.h>
-#define LL long long
 using namespace std;
 
-LL *createVector(LL a, LL b, LL c);
-LL *sumVectors(LL a[], LL b[]);
 int main()
 {
     ios ::sync_with_stdio(0);
     cin.tie(0);
 
-    LL testCases;
+    long testCases;
     cin >> testCases;
 
-    LL *vector1 = NULL;
-    LL *vector2 = NULL;
-    LL *result = NULL;
-    
+    long int B = 0;
+    long int A = 0;
+    long int solution1 = 0;
+    long int solution2 = 0;
     while (testCases > 0)
     {
-        pair<LL, LL> testCase;
+        pair<long, long> testCase;
 
-        cin >> testCase.first;
-        cin >> testCase.second;
+        cin >> testCase.first;  // x
+        cin >> testCase.second; // y
 
-        vector1 = createVector(1, 2, testCase.first);
-        vector2 = createVector(-4, -2, (-2 * testCase.second));
+        B = (testCase.first - (2 * testCase.second)) / -3;
+        A = testCase.second - (2 * B);
+        
+        solution1 = (2 * A) + B;
+        solution2 = (2 * B) + A;
 
-        result = sumVectors(vector1, vector2);
+        cout << solution1 << "\n";
+        cout << solution2 << "\n";
 
-        delete vector1;
-        delete vector2;
-        delete result;
+        cout << A << "\n";
+        cout << B << "\n";
+
+        if (solution1 == testCase.first && solution2 == testCase.second)
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+
         testCases--;
     }
 
-    vector1 = NULL;
-    vector2 = NULL;
-    result = NULL;
-
     return 0;
-}
-
-LL *createVector(LL a, LL b, LL c)
-{
-    LL *vector = new LL[3];
-    vector[0] = a;
-    vector[1] = b;
-    vector[2] = c;
-    return vector;
-}
-
-LL *sumVectors(LL a[], LL b[])
-{
-    LL *result = new LL[3];
-    result[0] = a[0] + b[0];
-    result[1] = a[1] + b[1];
-    result[2] = a[2] + b[2];
-    return result;
 }
