@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
+#define llui unsigned long int
 using namespace std;
 
-string palindromeReorder (string word);
+pair<string, bool> palindromeReorder(string word);
 int main()
 {
-    // To increase the velocity.
     ios::sync_with_stdio(0);
     cin.tie(0);
 
@@ -12,32 +12,57 @@ int main()
 
     cin >> characterChain;
 
-    string newWord = palindromeReorder(characterChain);
+    pair<string, bool> result = palindromeReorder(characterChain);
 
-    cout << "Char chain: " << characterChain << "\n";
-    cout << "New word: " << newWord <<  "\n";
+    if (result.second == true)
+    {
+        cout << result.first << "\n";
+    }
+    else
+    {
+        cout << "NO SOLUTION\n";
+        cout << result.first << "\n";
+    }
 
     return 0;
 }
 
-string palindromeReorder (string word)
+pair<string, bool> palindromeReorder(string word)
 {
-    word += "kbron";
-    return word;
+    bool flag = true;
+    llui index = 0;
+    llui j = word.length() - 1;
+    llui i = 0;
+    llui k = 0;
+    while (index < (word.length() / 2) && flag)
+    {
+        while (word[i] == word[j] && i < (word.length() / 2))
+        {
+            j--;
+            i++;
+        }
+
+        k = i + 1;
+        while (k < j && word[i] != word[k])
+        {
+            k++;
+        }
+
+        if (word[i] == word[k])
+        {
+            char letter = word[k];
+            word[k] = word[j];
+            word[j] = letter;
+        }
+        else
+        {
+            flag = false;
+        }
+        index++;
+    }
+
+    pair<string, bool> result;
+    result.first = word;
+    result.second = flag;
+    return result;
 }
-
-    // for (long unsigned int i = 0; i < characterChain.length(); i++)
-    // {
-    //     cout << characterChain[i] << " ";
-    // }
-
-    // cout << "\n";
-
-    // long unsigned int ord = 0;
-    // for (long unsigned int i = 0; i < characterChain.length(); i++)
-    // {
-    //     ord = characterChain[i];
-    //     cout << ord << " ";
-    // }
-
-    // cout << "Length of the string is: " << characterChain.length() / 2 << "\n";
