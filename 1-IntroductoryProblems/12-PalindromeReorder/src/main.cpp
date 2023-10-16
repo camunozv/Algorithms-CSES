@@ -134,7 +134,6 @@ pair<string, bool> palindromeReorder(string word)
         {
             alphabet[23] += 1;
         }
-
         else if (letter == 'Y')
         {
             alphabet[24] += 1;
@@ -174,7 +173,7 @@ pair<string, bool> palindromeReorder(string word)
     {
         llui i = 0;
         llui k = 0;
-        while (i < 26)
+        while (i < 26 && k <= 1)
         {
             if (alphabet[i] % 2 != 0)
             {
