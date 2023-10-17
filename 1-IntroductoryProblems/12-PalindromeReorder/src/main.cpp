@@ -2,7 +2,7 @@
 #define llui unsigned long int
 using namespace std;
 
-string palindromeReorder(string baseChain, llui n);
+int *characterMapping(string chain, llui n);
 int main()
 {
     ios::sync_with_stdio(0);
@@ -12,71 +12,52 @@ int main()
 
     cin >> characterChain;
 
-    cout << palindromeReorder(characterChain, (llui)characterChain.length());
+    int *mapping = characterMapping(characterChain, characterChain.length());
+
+    for (int i = 0; i < 25; i++)
+    {
+        cout << *(mapping + i) << " ";
+    }
+
+    delete mapping;
+    mapping = NULL;
     return 0;
 }
 
-string palindromeReorder(string baseChain, llui n)
+int *characterMapping(string chain, llui n)
 {
-    char temporal = ' ';
-    if (n % 2 == 0)
+    int *array = new int[25];
+
+    for (llui i = 0; i < n; i++)
     {
+        array[int(chain[i]) - 65]++;
+    }
 
-        for (llui i = 0; i < (n / 2); i++)
+    return array;
+}
+
+bool allEven (int *array)
+{
+    bool allEven = true;
+    for(int i = 0; i < 25; i++)
+    {
+        if (*(array + i) % 2 != 0)
         {
-            if (baseChain[i] != baseChain[n - 1 - i])
-            {
-                llui k = i + 1;
-                while (k < (n - 1 - i) && baseChain[k] != baseChain[i])
-                {
-                    k++;
-                }
-
-                if (baseChain[k] == baseChain[i])
-                {
-                    temporal = baseChain[n - 1 - i];
-                    baseChain[n - 1 - i] = baseChain[k];
-                    baseChain[k] = temporal;
-                }
-                else
-                {
-                    baseChain = "NO SOLUTION";
-                }
-            }
+            allEven = false;
         }
     }
-    else
-    {
-        bool onlyOneInTheMiddle = false;
-        for (llui i = 0; i < (n / 2); i++)
-        {
-            if (baseChain[i] != baseChain[n - 1 - i])
-            {
-                llui k = i + 1;
-                while (k < (n - 1 - i) && baseChain[k] != baseChain[i])
-                {
-                    k++;
-                }
+    return allEven;
+}
 
-                if (baseChain[k] != baseChain[i] && !onlyOneInTheMiddle)
-                {
-                    temporal = baseChain[(n / 2)];
-                    baseChain[(n / 2)] = baseChain[k];
-                    baseChain[k] = temporal;
-                    onlyOneInTheMiddle = true;
-                }
-                else if (baseChain[k] == baseChain[i])
-                {
-                    temporal = baseChain[n - 1 - i];
-                    baseChain[n - 1 - i] = baseChain[k];
-                    baseChain[k] = temporal;
-                }
-                else
-                {
-                    baseChain = "NO SOLUTION";
-                }
-            }
+bool atLeastOneOdd (int *array)
+{
+    int counter = 0;
+    for(int i = 0; i < 25; i++)
+    {
+        if (*(array + i) % 2 != 0)
+        {
+            counter++;
         }
     }
-    return baseChain;
+    return counter == 1 ? true : false;
 }
