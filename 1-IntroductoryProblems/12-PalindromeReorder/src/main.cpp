@@ -21,10 +21,32 @@ int main()
 
     if (hasEvenLength && allEven(mapping))
     {
-        // build the palindrome
+        int k = 0;
+        for (int i = 0; i < 26; i++)
+        {
+            k = *(mapping + i);
+            while (k > *(mapping + i)/2)
+            {
+                cout << char(i + 65);
+                k--;
+            }
+        }
+
+        for (int i = 25; i >= 0; i--)
+        {
+            k = *(mapping + i);
+            while (k > *(mapping + i)/2)
+            {
+                cout << char(i + 65);
+                k--;
+            }
+        }
+
+        cout << "\n";
     }
     else if (!hasEvenLength && atLeastOneOdd(mapping))
     {
+        string middle;
         // build the palindrome
     }
     else
@@ -39,7 +61,7 @@ int main()
 
 llui *characterMapping(string chain, llui n)
 {
-    llui *array = new llui[25];
+    llui *array = new llui[26];
     for (llui i = 0; i < n; i++)
     {
         array[int(chain[i]) - 65]++;
@@ -50,7 +72,7 @@ llui *characterMapping(string chain, llui n)
 bool allEven(llui *array)
 {
     bool allEven = true;
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 26; i++)
     {
         if (*(array + i) % 2 != 0)
         {
@@ -63,7 +85,7 @@ bool allEven(llui *array)
 bool atLeastOneOdd(llui *array)
 {
     int counter = 0;
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 26; i++)
     {
         if (*(array + i) % 2 != 0)
         {
