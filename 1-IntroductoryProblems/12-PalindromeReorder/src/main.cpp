@@ -14,13 +14,16 @@ int main()
 
     cin >> characterChain;
 
-    llui *mapping = characterMapping(characterChain, characterChain.length());
+    llui characterChainLength = characterChain.length();
+    llui *mapping = characterMapping(characterChain, characterChainLength);
 
-    if (characterChain.length() % 2 == 0 && allEven(mapping))
+    bool hasEvenLength = characterChainLength % 2 == 0 ? true : false;
+
+    if (hasEvenLength && allEven(mapping))
     {
         // build the palindrome
     }
-    else if (characterChain.length() % 2 != 0 && atLeastOneOdd(mapping))
+    else if (!hasEvenLength && atLeastOneOdd(mapping))
     {
         // build the palindrome
     }
