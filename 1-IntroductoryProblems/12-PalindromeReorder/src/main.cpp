@@ -2,7 +2,9 @@
 #define llui unsigned long int
 using namespace std;
 
-int *characterMapping(string chain, llui n);
+llui *characterMapping(string chain, llui n);
+bool allEven(llui *array);
+bool atLeastOneOdd(llui *array);
 int main()
 {
     ios::sync_with_stdio(0);
@@ -12,11 +14,19 @@ int main()
 
     cin >> characterChain;
 
-    int *mapping = characterMapping(characterChain, characterChain.length());
+    llui *mapping = characterMapping(characterChain, characterChain.length());
 
-    for (int i = 0; i < 25; i++)
+    if (characterChain.length() % 2 == 0 && allEven(mapping))
     {
-        cout << *(mapping + i) << " ";
+        // build the palindrome
+    }
+    else if (characterChain.length() % 2 != 0 && atLeastOneOdd(mapping))
+    {
+        // build the palindrome
+    }
+    else
+    {
+        cout << "NO SOLUTION \n";
     }
 
     delete mapping;
@@ -24,22 +34,20 @@ int main()
     return 0;
 }
 
-int *characterMapping(string chain, llui n)
+llui *characterMapping(string chain, llui n)
 {
-    int *array = new int[25];
-
+    llui *array = new llui[25];
     for (llui i = 0; i < n; i++)
     {
         array[int(chain[i]) - 65]++;
     }
-
     return array;
 }
 
-bool allEven (int *array)
+bool allEven(llui *array)
 {
     bool allEven = true;
-    for(int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)
     {
         if (*(array + i) % 2 != 0)
         {
@@ -49,10 +57,10 @@ bool allEven (int *array)
     return allEven;
 }
 
-bool atLeastOneOdd (int *array)
+bool atLeastOneOdd(llui *array)
 {
     int counter = 0;
-    for(int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)
     {
         if (*(array + i) % 2 != 0)
         {
