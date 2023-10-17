@@ -21,7 +21,7 @@ int main()
 
     if (hasEvenLength && allEven(mapping))
     {
-        int k = 0;
+        llui k = 0;
         for (int i = 0; i < 26; i++)
         {
             k = *(mapping + i);
