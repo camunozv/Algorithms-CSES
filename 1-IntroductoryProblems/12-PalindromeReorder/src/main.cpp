@@ -16,38 +16,80 @@ int main()
 
     llui characterChainLength = characterChain.length();
     llui *mapping = characterMapping(characterChain, characterChainLength);
-
     bool hasEvenLength = characterChainLength % 2 == 0 ? true : false;
 
+    string sideA;
+    string sideB;
+    llui k = 0;
+    llui b = 0;
     if (hasEvenLength && allEven(mapping))
     {
-        llui k = 0;
+
         for (int i = 0; i < 26; i++)
         {
             k = *(mapping + i);
-            while (k > *(mapping + i)/2)
+            b = k / 2;
+            while (k > b)
             {
-                cout << char(i + 65);
+                sideA += char(i + 65);
                 k--;
+            }
+
+            k = *(mapping + 25 - i);
+            b = k / 2;
+            while (k > b)
+            {
+                sideB += char(90 - i);
+                k--;
+            }
+        }
+        cout << sideA + sideB << "\n";
+    }
+    else if (!hasEvenLength && atLeastOneOdd(mapping))
+    {
+        string middle;
+        for (int i = 0; i < 26; i++)
+        {
+            k = *(mapping + i);
+            if (k % 2 == 0)
+            {
+                b = k / 2;
+                while (k > b)
+                {
+                    sideA += char(i + 65);
+                    k--;
+                }
             }
         }
 
         for (int i = 25; i >= 0; i--)
         {
-            k = *(mapping + i);
-            while (k > *(mapping + i)/2)
+            k = *(mapping + 25 - i);
+            if (k % 2 == 0)
             {
-                cout << char(i + 65);
-                k--;
+                b = k / 2;
+                while (k > b)
+                {
+                    sideB += char(90 - i);
+                    k--;
+                }
             }
         }
 
-        cout << "\n";
-    }
-    else if (!hasEvenLength && atLeastOneOdd(mapping))
-    {
-        string middle;
-        // build the palindrome
+        for (int i = 0; i < 26; i++)
+        {
+            k = *(mapping + i);
+            if (k % 2 != 0)
+            {
+                while (k > 0)
+                {
+                    middle += char(i + 65);
+                    k--;
+                }
+            }
+        }
+
+        cout << sideA + middle + sideB << "\n";
     }
     else
     {
