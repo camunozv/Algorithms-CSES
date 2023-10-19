@@ -47,56 +47,46 @@ int main()
     }
     else if (!hasEvenLength && atLeastOneOdd(mapping))
     {
-        string middle;
+        int middle = 0;
+        llui quantityOfMiddle = 0;
         for (int i = 0; i < 26; i++)
         {
-            k = *(mapping + i);
+            k = mapping[i];
+            b = k / 2;
             if (k % 2 == 0)
             {
-                b = k / 2;
                 while (k > b)
                 {
                     sideA += char(i + 65);
                     k--;
                 }
             }
-        }
-
-        for (int i = 25; i >= 0; i--)
-        {
-            k = *(mapping + 25 - i);
-            if (k % 2 == 0)
+            else
             {
-                b = k / 2;
-                while (k > b)
-                {
-                    sideB += char(90 - i);
-                    k--;
-                }
+                middle = i;
+                quantityOfMiddle = k;
             }
         }
-
-        for (int i = 0; i < 26; i++)
+        cout << sideA;
+        while (quantityOfMiddle > 0)
         {
-            k = *(mapping + i);
-            if (k % 2 != 0)
-            {
-                while (k > 0)
-                {
-                    middle += char(i + 65);
-                    k--;
-                }
-            }
+            cout << char(middle + 65);
+            quantityOfMiddle--;
         }
 
-        cout << sideA + middle + sideB << "\n";
+        for (int i = sideA.length() - 1; i >= 0; i--)
+        {
+            cout << sideA[i];
+        }
+
+        cout << "\n";
     }
     else
     {
         cout << "NO SOLUTION \n";
     }
 
-    delete mapping;
+    delete [] mapping;
     mapping = NULL;
     return 0;
 }
@@ -114,12 +104,11 @@ llui *characterMapping(string chain, llui n)
 bool allEven(llui *array)
 {
     bool allEven = true;
-    for (int i = 0; i < 26; i++)
+    int i = 0;
+    while (i < 26 && allEven)
     {
-        if (*(array + i) % 2 != 0)
-        {
-            allEven = false;
-        }
+        allEven = array[i] % 2 != 0 ? false : true;
+        i++;
     }
     return allEven;
 }
@@ -127,12 +116,14 @@ bool allEven(llui *array)
 bool atLeastOneOdd(llui *array)
 {
     int counter = 0;
-    for (int i = 0; i < 26; i++)
+    int i = 0;
+    while (i < 26 && counter <= 1)
     {
-        if (*(array + i) % 2 != 0)
+        if (array[i] % 2 != 0)
         {
             counter++;
         }
+        i++;
     }
     return counter == 1 ? true : false;
 }
