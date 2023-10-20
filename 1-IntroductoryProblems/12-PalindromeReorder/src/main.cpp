@@ -1,44 +1,44 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int *characterMapping(string chain, int n);
+
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    string characterChain;
+    string str;
+    cin >> str;
 
-    cin >> characterChain;
-
-    int characterChainLength = characterChain.length();
-    int *mapping = characterMapping(characterChain, characterChainLength);
-
-    string sideA;
-    string sideB;
-    int k = 0;
-    int b = 0;
-    int middle = -1;
-    int middleAppearances = 0;
-
-    int i = 0;
-    while (i < 26 && middleAppearances <= 1)
+    int mapping[26] = {0};
+    for (char character : str)
     {
-        k = mapping[i];
-        if (k % 2 != 0)
-        {
-            middle = i;
-            middleAppearances++;
-        }
-        i++;
+        mapping[character - 65]++;
     }
 
-    if (middleAppearances > 1)
+    int k = 0;
+    int middle = 0;
+    int oddAppearance = 0;
+    int r = 0;
+    while (r < 26 && oddAppearance <= 1)
+    {
+        k = mapping[r];
+        if (k % 2 != 0)
+        {
+            middle = r;
+            oddAppearance++;
+        }
+        r++;
+    }
+
+    if (oddAppearance > 1)
     {
         cout << "NO SOLUTION";
     }
     else
     {
+        int b = 0;
         for (int i = 0; i < 26; i++)
         {
             k = mapping[i];
@@ -50,7 +50,7 @@ int main()
             }
         }
 
-        if (middleAppearances == 1)
+        if (oddAppearance == 1)
         {
             cout << char(middle + 65);
         }
@@ -66,20 +66,6 @@ int main()
             }
         }
     }
-
     cout << "\n";
-
-    delete[] mapping;
-    mapping = NULL;
     return 0;
-}
-
-int *characterMapping(string chain, int n)
-{
-    int *array = new int[26];
-    for (int i = 0; i < n; i++)
-    {
-        array[int(chain[i]) - 65]++;
-    }
-    return array;
 }
