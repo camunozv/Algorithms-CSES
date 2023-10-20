@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
-
 int main()
 {
     ios::sync_with_stdio(0);
@@ -16,7 +13,6 @@ int main()
     {
         mapping[character - 65]++;
     }
-
     int k = 0;
     int middle = 0;
     int oddAppearance = 0;
@@ -49,12 +45,10 @@ int main()
                 k--;
             }
         }
-
         if (oddAppearance == 1)
         {
             cout << char(middle + 65);
         }
-
         for (int i = 25; i >= 0; i--)
         {
             k = mapping[i];
