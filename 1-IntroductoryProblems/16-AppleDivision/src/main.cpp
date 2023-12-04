@@ -18,14 +18,14 @@ int main()
         cin >> weights[i];
     }
 
-    LLI totalWeight = 0;
+    multiset<LLI> appleSet1;
 
-    for (LLI i = 0; i < apples; i++)
+    for(LLI i = 0; i < apples; i++)
     {
-        totalWeight += weights[i];
+        appleSet1.insert(weights[i]);
     }
 
-    cout << totalWeight % 2 << "\n";
-
+    cout << "\n";
+    
     return 0;
 }
