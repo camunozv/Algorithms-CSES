@@ -21,13 +21,18 @@ int main()
     sort(movies.begin(), movies.end());
 
     
-    int count = 0;
-    pair<int, int> movie;
-    for (int i = 0; i < n; i++)
+    int count = 1;
+    
+    pair<int, int> movie_2 = movies[0];
+    int last_endtime = movies[0].first;
+
+    for (int i = 1; i < n; i++)
     {
-        movie = movies[i];
-        if (movie.first > movies[i + 1].second)
+        movie_2 = movies[i];
+
+        if (movie_2.second >= last_endtime)
         {
+            last_endtime = movie_2.first;
             count++;
         }
     }
