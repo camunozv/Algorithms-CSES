@@ -10,8 +10,8 @@ int main()
     int n = 0;
     cin >> n;
 
-    int x = 0;
-    cin >> x;
+    int target = 0;
+    cin >> target;
 
     vector<int> initial_array(n);
     vector<int> sorted_array(n);
@@ -24,42 +24,43 @@ int main()
 
     sort(sorted_array.begin(), sorted_array.end());
 
-    int count = 0;
-    int value_to_search = 0;
-    int found_index_1 = 0;
-    int value_found = 0;
-
-    for (int j = 0; j < n; j++)
+    int value_1 = 0;
+    int value_2 = 0;
+    for(int i = 0; i < n - 2; i++)
     {
-        value_to_search = x - initial_array[j];
-        auto iterator_value_found = lower_bound(sorted_array.begin(), sorted_array.end(), value_to_search);
-        if (iterator_value_found == sorted_array.end() || *(iterator_value_found) != value_to_search)
+        int possible = target - sorted_array[i];
+        auto possible_found = lower_bound(sorted_array.begin() + i + 1, sorted_array.end(), possible);
+        
+        if (*(possible_found) != possible)
         {
-            count++;
             continue;
-        }
-        else
+        } else 
         {
-            found_index_1 = j;
-            value_found = *(iterator_value_found);
+            value_1 = possible;
+            value_2 = sorted_array[i];
             break;
         }
     }
 
-    if (count == n)
+    if (value_1 + value_2 == target)
     {
-        cout << "IMPOSSIBLE \n";
-    }
-    else
-    {
-        found_index_1++;
-        int i = 0;
-        while (initial_array[i] != value_found)
+        int i1 = 0;
+        while (initial_array[i1] != value_1)
         {
-            i++;
+            i1++;
         }
-        i++;
-        cout << found_index_1 << " " << i << "\n";
+
+        int i2 = 0;
+        while (initial_array[i2] != value_2)
+        {
+            i2++;
+        }
+        i1++;
+        i2++;
+        cout << i1 << " " << i2 << "\n";
+
+    } else {
+        cout << "IMPOSSIBLE \n";
     }
 
     return 0;
