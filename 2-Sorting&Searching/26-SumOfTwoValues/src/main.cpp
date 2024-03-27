@@ -26,7 +26,7 @@ int main()
 
     int value_1 = 0;
     int value_2 = 0;
-    for(int i = 0; i < n - 2; i++)
+    for(int i = 0; i < n - 1; i++)
     {
         int possible = target - sorted_array[i];
         auto possible_found = lower_bound(sorted_array.begin() + i + 1, sorted_array.end(), possible);
@@ -50,10 +50,10 @@ int main()
             i1++;
         }
 
-        int i2 = 0;
+        int i2 = n - 1;
         while (initial_array[i2] != value_2)
         {
-            i2++;
+            i2--;
         }
         i1++;
         i2++;
