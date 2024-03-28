@@ -3,6 +3,7 @@
 using namespace std;
 
 int binary_search_1(int x, vector<int> &v);
+int binary_search_2(int x, vector<int> &v);
 int main()
 {
     ios::sync_with_stdio(0);
@@ -93,4 +94,22 @@ int binary_search_1(int x, vector<int> &v)
         }
     }
     return v[k] == x ? x : -1;
+}
+
+int binary_search_2(int x, vector<int> &v)
+{
+    int jump = 0;
+    int size = v.size();
+    int possible_increment = size / 2;
+    while (possible_increment >= 1)
+    {
+        while (jump + possible_increment < size && v[jump + possible_increment] <= x) // jump is only incremented if conditions the element is in range
+        {
+            jump += possible_increment;
+        }
+
+        possible_increment /= 2;
+    }
+
+    return v[jump] == x ? v[jump] : -1;
 }
