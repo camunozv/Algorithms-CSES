@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int generate_subsets(int k, int n, int sum1, int sum2, vector<int> &elements);
+int apple_division(int k, int n, int sum1, int sum2, vector<int> &elements);
 int main()
 {
     ios::sync_with_stdio(0);
@@ -16,17 +16,17 @@ int main()
     for (int i = 0; i < n; i++)
         cin >> my_vector[i];
 
-    cout << generate_subsets(0, n, 0, 0, my_vector) << "\n";
+    cout << apple_division(0, n, 0, 0, my_vector) << "\n";
     return 0;
 }
 
-int generate_subsets(int k, int n, int sum1, int sum2, vector<int> &elements)
+int apple_division(int k, int n, int sum1, int sum2, vector<int> &elements)
 {
     int minimum = 0;
     if (k == n)
     {
         return abs(sum1 - sum2);
     }
-    minimum = min(generate_subsets(k + 1, n, sum1 + elements[k], sum2, elements), generate_subsets(k + 1, n, sum1, sum2 + elements[k], elements));
+    minimum = min(apple_division(k + 1, n, sum1 + elements[k], sum2, elements), apple_division(k + 1, n, sum1, sum2 + elements[k], elements));
     return minimum;
 }
