@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
-
+#define ll long long int
 using namespace std;
 
-int apple_division(int k, int n, int sum1, int sum2, vector<int> &elements);
+ll apple_division(int k, int n, ll sum1, ll sum2, vector<int> &elements);
 int main()
 {
     ios::sync_with_stdio(0);
@@ -20,13 +20,11 @@ int main()
     return 0;
 }
 
-int apple_division(int k, int n, int sum1, int sum2, vector<int> &elements)
+ll apple_division(int k, int n, ll sum1, ll sum2, vector<int> &elements)
 {
-    int minimum = 0;
     if (k == n)
     {
         return abs(sum1 - sum2);
     }
-    minimum = min(apple_division(k + 1, n, sum1 + elements[k], sum2, elements), apple_division(k + 1, n, sum1, sum2 + elements[k], elements));
-    return minimum;
+    return min(apple_division(k + 1, n, sum1 + elements[k], sum2, elements), apple_division(k + 1, n, sum1, sum2 + elements[k], elements));
 }
