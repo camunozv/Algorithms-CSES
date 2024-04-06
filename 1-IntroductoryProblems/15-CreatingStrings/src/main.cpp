@@ -2,61 +2,60 @@
 
 using namespace std;
 
-void generate_permutations(int k, int n, string &word, vector<bool> &included, vector<char> &permutation);
-int calculate_factorial(int n);
+// just 4 fun
+int binary_search_1(int value, vector<int> data);
+int binary_search_2(int value, vector<int> data);
 int main()
 {
 
     ios::sync_with_stdio(NULL);
     cin.tie(0);
 
-    string the_string;
-    cin >> the_string;
-
-    int n = the_string.length();
-    vector<bool> included(n, false);
-    vector<char> permutation(n);
-
-    int generated_permutations = calculate_factorial(n);
-    cout << generated_permutations << "\n";
-    generate_permutations(0, n, the_string, included, permutation);
     return 0;
 }
 
-void generate_permutations(int k, int n, string &word, vector<bool> &included, vector<char> &permutation)
+int binary_search_1(int value, vector<int> data)
 {
-    if (k == n)
+    sort(data.begin(), data.end());
+    int inferior = 0;
+    int superior = data.size() - 1;
+
+    int index = (superior + inferior) / 2;
+
+    bool found = data[index] == value;
+
+    while (inferior <= superior && !found)
     {
-        for (auto x : permutation)
+        if (value > data[index])
         {
-            cout << x;
+            inferior = index + 1;
         }
-        cout << "\n";
-    }
-    else
-    {
-        for (int i = 0; i < n; i++)
+        else if (value < data[index])
         {
-            if (included[i] == false)
-            {
-                // include the character
-                included[i] = true;
-                permutation[i] = word[k];
-                // code here... // generate the next permutation
-                generate_permutations(k + 1, n, word, included, permutation);
-                included[i] = false; // uninclude the character, able it to other positions in the permutation
-            }
+            superior = index - 1;
         }
+        found = data[index] == value;
+        index /= 2;
     }
+
+    return value == data[index] ? value : -1;
 }
-int calculate_factorial(int n)
+
+int binary_search_2(int value, vector<int> data)
 {
-    if (n == 1 || n == 0)
+    sort(data.begin(), data.end());
+
+    int jump = 0;
+    int n = data.size();
+
+    for (int possible_jump = n / 2; possible_jump >= 1; possible_jump /= 2)
     {
-        return 1;
+        // Jump is only incremented if data is still in range.
+        while (jump + possible_jump < n && data[jump + possible_jump] <= value)
+        {
+            jump += possible_jump;
+        }
     }
-    else
-    {
-        return n * calculate_factorial(n - 1);
-    }
+
+    return value == data[jump] ? value : -1;
 }
