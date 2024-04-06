@@ -2,60 +2,53 @@
 
 using namespace std;
 
-// just 4 fun
-int binary_search_1(int value, vector<int> data);
-int binary_search_2(int value, vector<int> data);
+void generate_next(string &initial);
 int main()
 {
 
     ios::sync_with_stdio(NULL);
     cin.tie(0);
 
+    string the_string;
+    cin >> the_string;
+
+    sort(the_string.begin(), the_string.end());
+
+    // int n = the_string.length() - 1;
+
+    // generate_all(the_string, n);
+
+    generate_next(the_string);
     return 0;
 }
 
-int binary_search_1(int value, vector<int> data)
+// 1. sort the string in alphabetical order.
+// 2. create the algorithm to generate the next permutation
+// 3. create the whole program.
+
+// 2.1. Find two elements in which a[j] < a[j + 1]
+// 2.2. Invert those elements such that a[j] = a[j + 1] & a[j+1] = a[j]
+// 2.3. Organize everything from position a[j + 1] until the end of the string.
+// 2.4. If no pair such that a[j] < a[j + 1] is found means we have finished, bce the
+// string is completely inverted.
+
+void generate_next(string &initial)
 {
-    sort(data.begin(), data.end());
-    int inferior = 0;
-    int superior = data.size() - 1;
-
-    int index = (superior + inferior) / 2;
-
-    bool found = data[index] == value;
-
-    while (inferior <= superior && !found)
+    int n = initial.length();
+    int i = n - 1;
+    bool done = false;
+    do
     {
-        if (value > data[index])
+        if (initial[i - 1] < initial[i])
         {
-            inferior = index + 1;
+            char temp = initial[i - 1];
+            initial[i - 1] = initial[i];
+            initial[i] = temp;
+            sort(initial.begin() + i, initial.end());
+            cout << initial << "\n";
+            generate_next(initial);
+            done = true;
         }
-        else if (value < data[index])
-        {
-            superior = index - 1;
-        }
-        found = data[index] == value;
-        index /= 2;
-    }
-
-    return value == data[index] ? value : -1;
-}
-
-int binary_search_2(int value, vector<int> data)
-{
-    sort(data.begin(), data.end());
-
-    int jump = 0;
-    int n = data.size();
-
-    for (int possible_jump = n / 2; possible_jump >= 1; possible_jump /= 2)
-    {
-        // Jump is only incremented if data is still in range.
-        while (jump + possible_jump < n && data[jump + possible_jump] <= value)
-        {
-            jump += possible_jump;
-        }
-    }
-
-    return value == data[jump] ? value : -1;
+        i--;
+    } while (i >= 1 && !done);
 }
