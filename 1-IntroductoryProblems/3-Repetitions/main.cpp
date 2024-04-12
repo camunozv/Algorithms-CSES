@@ -8,7 +8,7 @@ int main() {
     cin >> DNAchain;
 
     // 1. count the number of words
-    int i = 0;
+                int i = 0;
     int wordCounter = 0;
     while (i < (int) DNAchain.length()) {
         if (DNAchain[i] != DNAchain[i + 1]) {
