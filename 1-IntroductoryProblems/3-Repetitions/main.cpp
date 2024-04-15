@@ -8,7 +8,7 @@ int main() {
     cin >> DNAchain;
 
     // 1. count the number of words
-                                int i = 0;
+    int i = 0;
     int wordCounter = 0;
     while (i < (int) DNAchain.length()) {
         if (DNAchain[i] != DNAchain[i + 1]) {
@@ -48,3 +48,13 @@ int main() {
     cout << maxLength << endl;
     return 0;
 }
+
+// Customized keyboard shortcuts
+// alt + f12 -> open terminal
+// alt + 4 -> open run window
+// ctrl + shift + f4 -> close window
+// shift + f10 -> run
+// alt + uparrow -> move line up
+// alt + downarrow -> move line down
+// ctrl + shift + up / down -> move statement up / down
+// ctrl + d -> duplicate line
