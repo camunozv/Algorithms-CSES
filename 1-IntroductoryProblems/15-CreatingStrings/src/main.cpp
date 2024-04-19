@@ -2,58 +2,50 @@
 
 using namespace std;
 
-void lexi_perm(int k, int n, string &text, vector<bool> &included, string &the_string, vector<vector<char>> &non_repeat, int &count, vector<string> &save);
+void creating_strings(int k, int n, vector<bool> &included, string &the_string, string &text, set<string> &the_set);
 int main()
 {
+
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    string permutation;
-    cin >> permutation;
+    string the_string;
+    cin >> the_string;
 
-    int n = permutation.length();
-    vector<vector<char>> non_repeat;
+    int n = the_string.size();
+    string permutation = the_string;
 
-    for (int i = 0; i < n; i++)
-    {
-        vector<char> store(1);
-        non_repeat.push_back(store);
-    }
-
-    string text = permutation;
+    set<string> string_set;
     vector<bool> included(n, false);
-    vector<string> save;
-    int count = 0;
-    sort(permutation.begin(), permutation.end());
-    lexi_perm(0, n, text, included, permutation, non_repeat, count, save);
 
-    cout << count << "\n";
-    for (auto s : save)
+    creating_strings(0, n, included, the_string, permutation, string_set);
+
+    cout << string_set.size() << "\n";
+
+    for (auto x : string_set)
     {
-        cout << s << "\n";
+        cout << x << "\n";
     }
+
     return 0;
 }
 
-void lexi_perm(int k, int n, string &text, vector<bool> &included, string &the_string, vector<vector<char>> &non_repeat, int &count, vector<string> &save)
+void creating_strings(int k, int n, vector<bool> &included, string &the_string, string &text, set<string> &the_set)
 {
     if (k == n)
     {
-        count++;
-        save.push_back(text);
+        string inserted_string = text;
+        the_set.insert(inserted_string); // By inserting new strings in a set we delete repeated permutations :D
     }
     else
     {
         for (int i = 0; i < n; i++)
         {
-            char character = the_string[i];
-            bool able = non_repeat[k][0] != character;
-            if (able && included[i] == false)
+            if (included[i] == false)
             {
-                non_repeat[k][0] = character;
                 included[i] = true;
-                text[k] = character;
-                lexi_perm(k + 1, n, text, included, the_string, non_repeat, count, save);
+                text[k] = the_string[i];
+                creating_strings(k + 1, n, included, the_string, text, the_set);
                 included[i] = false;
             }
         }
