@@ -48,7 +48,7 @@ int main() {
 int apartments_assign(stack<int> &m, stack<int> &n, int k){
     int assigned = 0;
     while(!m.empty() && !n.empty()){
-        if (m.top() == n.top() || ((n.top() >= (m.top() - k)) && (n.top() <= (m.top() + k)))){
+        if (m.top() == n.top() || ((n.top() - k <= (m.top())) && (n.top() + k >= (m.top())))){
             m.pop();
             n.pop();
             assigned++;
