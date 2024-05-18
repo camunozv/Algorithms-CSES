@@ -2,9 +2,10 @@
 
 using namespace std;
 
-void assign_tickets(vector<pair<int, int>> &c, vector<int> &t);
-
+void assign_tickets(vector<int> &C, vector<int> &T);
+void count_appearances (vector<int> &A, vector<int> &B);
 int main() {
+
     ios::sync_with_stdio(0);
     cin.tie(0);
 
@@ -15,66 +16,48 @@ int main() {
     cin >> customers;
 
     vector<int> tickets_price(tickets);
-    vector<pair<int, int>> customers_price(customers);
+    vector<int> customers_price(customers);
 
     for (int i = 0; i < tickets; i++)
         cin >> tickets_price[i];
 
     for (int i = 0; i < customers; i++) {
-        cin >> customers_price[i].first;
-        customers_price[i].second = 0;
+        cin >> customers_price[i];
     }
 
     sort(tickets_price.begin(), tickets_price.end());
 
-    vector<pair<int, int>> vec;
+    vector<int> frequency;
+    count_appearances(tickets_price, frequency);
 
-    pair<int, int> k;
-    k.first = 1;
-    k.second = 5;
-
-    pair<int, int> k2;
-    k2.first = 2;
-    k2.second = 6;
-
-    pair<int, int> k3;
-    k3.first = 3;
-    k3.second = 7;
-
-    pair<int, int> k4;
-    k4.first = 4;
-    k4.second = 8;
-
-    vector<pair<int, int>> v1;
-
-    v1.push_back(k);
-    v1.push_back(k2);
-    v1.push_back(k3);
-    v1.push_back(k4);
-
-    pair<int, int> toSearch;
-    toSearch.first = 4;
-    toSearch.second = 16;
-    auto p = lower_bound(v1.begin(), v1.end(), toSearch);
-
-    // This is how we print pairs from an iterator.
-    cout << p->first << " " << p->second << "\n";
 
     return 0;
 }
 
-void assign_tickets(vector<pair<int, int>> &c, vector<int> &t) {
+void assign_tickets(vector<int> &C, vector<int> &T, vector<int> &F) {
+
+    int n = C.size();
+    int element = 0;
+    for (int i = 0; i < n; i++){
+        element = C[i];
+        auto ticket_found = upper_bound(T.begin(), T.end(), element);
+        ticket_found--;
 
 
+    }
 }
 
-
-
-
-
-
-
-
-
-
-
+void count_appearances (vector<int> &A, vector<int> &B) {
+    int n = A.size();
+    int element = A[0];
+    int count = 1;
+    for (int i = 0; i < n; i++){
+        if (A[i] == element) {
+            count++;
+        }else {
+            B.push_back(count);
+            element = A[i];
+            count = 1;
+        }
+    }
+}
