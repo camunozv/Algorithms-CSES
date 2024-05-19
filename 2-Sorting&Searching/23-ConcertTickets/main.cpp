@@ -4,7 +4,7 @@ using namespace std;
 
 void count_appearances(vector<int> &A, map<int, int> &B);
 
-void assign_tickets(vector<int> &C, vector<int> &T, map<int, int> &F);
+void assign_tickets(vector<int> &C, map<int, int> &F);
 
 int main() {
 
@@ -31,35 +31,29 @@ int main() {
     sort(tickets_price.begin(), tickets_price.end());
 
     map<int, int> frequency;
-    count_appearances(tickets_price, frequency);
 
-    assign_tickets(customers_price, tickets_price, frequency);
+    count_appearances(tickets_price, frequency);
+    assign_tickets(customers_price, frequency);
 
     return 0;
 }
 
-void assign_tickets(vector<int> &C, vector<int> &T, map<int, int> &F) {
+void assign_tickets(vector<int> &C, map<int, int> &F){
     int n = C.size();
     int element = 0;
-    int position = 0;
     for (int i = 0; i < n; i++) {
         element = C[i];
-        auto ticket_found = upper_bound(T.begin(), T.end(), element);
-        ticket_found--;
-
-        if (ticket_found == T.begin()) { // There is no price
-            cout << -1 << "";
+        auto ticket_found = F.upper_bound(element);
+        if (ticket_found == F.begin()) {
+            cout << -1 << "\n";
         } else {
-            position = *ticket_found;
-
-            cout << position << "\n";
-            F[position]--;
-
-            if (F[position] == 0) {
-                F.erase(position);
+            ticket_found--;
+            cout << ticket_found->first << "\n";
+            ticket_found->second--;
+            if (ticket_found->second == 0) {
+                F.erase(ticket_found);
             }
         }
-
     }
 }
 
