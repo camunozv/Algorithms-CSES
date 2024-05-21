@@ -24,7 +24,6 @@ int main() {
 
     llint longest_stick = find_max(stick_lengths);
     llint initial_cost = calculate_cost(longest_stick, stick_lengths);
-    llint test_length = longest_stick / 2;
     llint new_cost = 0;
 
     do {
