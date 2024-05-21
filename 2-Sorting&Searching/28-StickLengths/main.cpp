@@ -24,18 +24,19 @@ int main() {
 
     llint longest_stick = find_max(stick_lengths);
     llint initial_cost = calculate_cost(longest_stick, stick_lengths);
-
+    llint test_length = longest_stick / 2;
     llint new_cost = 0;
+
     do {
         new_cost = calculate_cost(longest_stick / 2, stick_lengths);
         if (new_cost < initial_cost) {
             initial_cost = new_cost;
             longest_stick /= 2;
         } else {
-
+            longest_stick /= 4;
         }
 
-    } while (longest_stick != 1);
+    } while (longest_stick >= 1);
 
     cout << initial_cost << "\n";
     return 0;
@@ -53,7 +54,6 @@ llint calculate_cost(llint common_length, vector<llint> &stick_arr) {
 }
 
 llint find_max(vector<llint> &stick_arr) {
-
     llint max_element = stick_arr[0];
     int n = stick_arr.size();
     for (int i = 1; i < n; i++) {
@@ -61,6 +61,5 @@ llint find_max(vector<llint> &stick_arr) {
             max_element = stick_arr[i];
         }
     }
-
     return max_element;
 }
