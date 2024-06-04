@@ -6,8 +6,6 @@ using namespace std;
 
 llint calculate_cost(llint common_length, vector<llint> &stick_arr);
 
-llint find_max(vector<llint> &stick_arr);
-
 int main() {
 
     ios::sync_with_stdio(0);
@@ -22,43 +20,59 @@ int main() {
         cin >> stick_lengths[i];
     }
 
-    llint longest_stick = find_max(stick_lengths);
-    llint initial_cost = calculate_cost(longest_stick, stick_lengths);
-    llint new_cost = 0;
+    sort(stick_lengths.begin(), stick_lengths.end());
 
-    do {
-        new_cost = calculate_cost(longest_stick / 2, stick_lengths);
-        if (new_cost < initial_cost) {
-            initial_cost = new_cost;
-            longest_stick /= 2;
-        } else {
-            longest_stick /= 4;
-        }
+    int mid = n / 2;
 
-    } while (longest_stick >= 1);
+    llint minimum_cost = calculate_cost(stick_lengths[mid], stick_lengths);
 
-    cout << initial_cost << "\n";
+    cout << minimum_cost << "\n";
     return 0;
 }
 
 llint calculate_cost(llint common_length, vector<llint> &stick_arr) {
 
     llint total_cost = 0;
-    int n = stick_arr.size();
-    for (int i = 0; i < n; i++) {
+    unsigned long int n = stick_arr.size();
+    for (unsigned long int i = 0; i < n; i++) {
         total_cost += abs(stick_arr[i] - common_length);
     }
 
     return total_cost;
 }
 
-llint find_max(vector<llint> &stick_arr) {
-    llint max_element = stick_arr[0];
-    int n = stick_arr.size();
-    for (int i = 1; i < n; i++) {
-        if (stick_arr[i] > max_element) {
-            max_element = stick_arr[i];
-        }
-    }
-    return max_element;
+/*
+
+// This code I found is for further learning.
+ ll cost(ll arr[],ll n,ll x){
+    ll ans=0;
+    for(int i=0 ; i<n ; i++)
+    ans += abs(arr[i]-x);
+    return ans;
 }
+
+int main(){
+
+    ll n,i,high=-1,low=0,mid,ans=mx6;
+    cin>>n;
+
+    ll arr[n];
+
+    for(i=0 ; i<n ; i++){
+        cin>>arr[i];
+        high = max(high,arr[i]);
+    }
+
+    while(low<=high){
+        mid = (high+low)/2;
+        ll md = cost(arr,n,mid);
+        ans = min(ans,md);
+        if(cost(arr,n,mid+1)<md)
+        low = mid+1;
+        else
+        high = mid-1;
+    }
+    cout<<ans;
+    return 0;
+}
+*/
