@@ -1,0 +1,23 @@
+# Ignore Makefile
+Makefile
+
+# Ignore Compile file
+*.o
+
+# Ignore Directory redirecting
+*.d
+
+# Weird CLion file
+C++CSES.iml
+
+# XML files
+*.xml
+
+# Idea config
+.idea
+
+# makefiles
+CMakeLists.txt
+
+# makebuild
+cmake-build-debug/
