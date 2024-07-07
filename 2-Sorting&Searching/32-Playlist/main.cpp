@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int playlist(vector<int> a, int n);
+unsigned long int playlist(vector<int> a, int n);
 
 int main() {
 
@@ -22,25 +22,25 @@ int main() {
     return 0;
 }
 
-int playlist(vector<int> a, int n) {
+unsigned long int playlist(vector<int> a, int n) {
 
-    int longest_songs = 0;
-
-    unordered_set<int> longest_playlist;
+    map<int, int> sequence;
+    unsigned long int best = 0;
     int value = 0;
 
     for (int i = 0; i < n; i++) {
         value = a[i];
-        auto end_of = longest_playlist.end();
-        if (longest_playlist.find(value) == end_of) {
-            longest_playlist.insert(value);
+        if (sequence.find(value) == sequence.end()) {
+            sequence[value] = i;
         } else {
-            if (longest_playlist.size() > longest_songs) {
-                longest_songs = longest_playlist.size();
+            i = sequence[value] + 1;
+
+            if (sequence.size() > best) {
+                best = sequence.size();
             }
-            longest_playlist.clear();
+            sequence.clear();
         }
     }
 
-    return longest_songs;
+    return best;
 }
