@@ -1,8 +1,8 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 
 using namespace std;
 
-int min_coin(int &x, vector<int> &coins, vector<int> &value, vector<bool> &calculated);
+int solve(int x, vector<int> &coins, vector<bool> &value, vector<int> &calculated);
 
 int main() {
     ios::sync_with_stdio(0);
@@ -20,10 +20,36 @@ int main() {
         cin >> coins[i];
     }
 
+    vector<int> possible_values(x + 1, 0);
+    vector<bool> calculated_values(x + 1, false);
+
+    cout << "\n";
+
+    int solution = solve(x, coins, calculated_values, possible_values);
+
+    cout << solution << "\n";
     return 0;
 }
 
-int min_coin(int &x, vector<int> &coins, vector<int> &value, vector<bool> &calculated) {
-
-    return 0;
+int solve(int x, vector<int> &coins, vector<bool> &value, vector<int> &calculated) {
+    if (x == 0) {
+        return 0;
+    } else if (x < 0) {
+        return INT_MAX + x;
+    } else if (value[x]) {
+        return calculated[x];
+    } else {
+        int best = INT_MAX;
+        for (auto c: coins) {
+            best = min(best, solve(x - c, coins, value, calculated) + 1);
+        }
+        value[x] = true;
+        calculated[x] = best;
+        return best;
+    }
 }
+
+/*
+ * 1 1
+1000000
+ * */
