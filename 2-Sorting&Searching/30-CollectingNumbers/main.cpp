@@ -12,9 +12,9 @@ int main() {
     int n = 0;
     cin >> n;
 
-    vector<int> numbers(n);
+    vector<int> numbers(n + 1);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 1; i < n + 1; i++) {
         cin >> numbers[i];
     }
 
@@ -25,15 +25,15 @@ int main() {
 
 int solve(vector<int> numbers, int n) {
 
-    int rounds = 1;
+    int rounds = 1; // minimum number of rounds
 
     vector<int> number_map(n + 1);
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i < n + 1; i++) {
         number_map[numbers[i]] = i;
     }
 
-    for (int j = 1; j <= n - 1; j++) {
+    for (int j = 1; j < n; j++) {
         if (number_map[j] > number_map[j + 1]) {
             rounds++;
         }
