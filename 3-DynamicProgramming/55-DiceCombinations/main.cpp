@@ -12,8 +12,8 @@ int main() {
     int n = 0;
     cin >> n;
 
-    vector<bool> calculated(n, false);
-    vector<li> value(n, 0);
+    vector<bool> calculated(n + 1, false);
+    vector<li> value(n + 1, 0);
 
     cout << solve(n, calculated, value) << "\n";
 
@@ -26,17 +26,16 @@ li solve(li n, vector<bool> &calculated, vector<li> &value) {
     if (n == 0) {
         return 1;
     } else if (n < 0) {
-        return INT_MIN;
+        return 0;
     } else if (calculated[n]) {
         return value[n];
     } else {
         for (int i = 1; i < 7; i++) {
-            li r = solve(n - i, calculated, value);
-            if (r > 0) k += r;
+            k += solve(n - i, calculated, value);
         }
 
         calculated[n] = true;
-        k = k % (((li) pow(10, 7)) + 7);
+        k = k % (((li) pow(10, 9)) + 7);
         value[n] = k;
 
         return k;
