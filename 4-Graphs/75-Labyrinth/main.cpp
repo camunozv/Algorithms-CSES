@@ -2,11 +2,10 @@
 
 using namespace std;
 
-void dfs(int i, int j, int &n, int &m, int length, string cum, int &best, string &path, vector<vector<bool>> &visited,
-         vector<vector<char>> &board);
+void
+solve(int i, int j, int &n, int &m, vector<vector<char>> &board, queue<tuple<int, int, char>> &the_queue, string &path);
 
 int main() {
-
     ios::sync_with_stdio(0);
     cin.tie(0);
 
@@ -15,90 +14,75 @@ int main() {
     cin >> n;
     cin >> m;
 
-    // need to use a bfs
-
     vector<vector<char>> labyrinth(n);
-    vector<vector<bool>> visited(n);
 
     for (int i = 0; i < n; i++) {
         vector<char> line(m);
-        vector<bool> bool_line(m, false);
         for (int j = 0; j < m; j++) {
             cin >> line[j];
         }
-        visited[i] = bool_line;
         labyrinth[i] = line;
     }
 
-    int i = 0;
-    int j = 0;
-
-    int i2 = 0;
-
-    while (i < n && labyrinth[i2][j] != 'A') {
-        while (j < m && labyrinth[i][j] != 'A') {
-            j++;
+    int i1 = 0;
+    int j1 = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (labyrinth[i][j] == 'A') {
+                i = i1;
+                j = j1;
+            }
         }
-        if (labyrinth[i][j] == 'A') {
-            i2 = i;
-        }
-        i++;
     }
 
-    int initial_length = 0;
-    string cum = "";
-    int best = INT_MAX;
-    string path = "";
+    queue<tuple<int, int, char>> my_queue;
 
-    dfs(i2, j, n, m, initial_length, cum, best, path, visited, labyrinth);
+    string path;
 
-    if (best != INT_MAX) {
-        cout << "YES\n";
-        cout << path.size() << "\n";
-        cout << path << "\n";
-    } else {
-        cout << "NO\n";
-    }
+    solve(i1, j1, n, m, labyrinth, my_queue, path);
 
     return 0;
 }
 
-void dfs(int i, int j, int &n, int &m, int length, string cum, int &best, string &path, vector<vector<bool>> &visited,
-         vector<vector<char>> &board) {
+void
+solve(int i, int j, int &n, int &m, vector<vector<char>> &board, queue<tuple<int, int, char>> &the_queue,
+      string &path) {
 
-    if (board[i][j] == '#') {
-        return;
-    } else if (board[i][j] == 'B') {
-        if (length < best) {
-            best = length;
-            path = cum;
+    tuple<int, int, char> pos_A = make_tuple(i, j, 00);
+    the_queue.push(pos_A);
+
+    while (!the_queue.empty() && board[i][j] != 'B') {
+        tuple<int, int, char> front = the_queue.front();
+
+        i = get<0>(front);
+        j = get<1>(front);
+        path += get<2>(front);
+
+        if (i + 1 < n && board[i + 1][j] != '#') { // down
+            tuple<int, int, char> pos = make_tuple(i + 1, j, 'D');
+            the_queue.push(pos);
         }
-        return;
+
+        if (i - 1 >= 0 && board[i - 1][j] != '#') { // up
+            tuple<int, int, char> pos = make_tuple(i - 1, j, 'U');
+            the_queue.push(pos);
+        }
+
+        if (j + 1 < m && board[i][j + 1] != '#') { // right
+            tuple<int, int, char> pos = make_tuple(i, j + 1, 'R');
+            the_queue.push(pos);
+        }
+
+        if (j - 1 >= 0 && board[i][j - 1] != '#') { // left
+            tuple<int, int, char> pos = make_tuple(i, j - 1, 'L');
+            the_queue.push(pos);
+        }
+        the_queue.pop();
     }
 
-    visited[i][j] = true;
-
-    if (i + 1 < n && !visited[i + 1][j]) {
-        cum += 'D';
-        length += 1;
-        dfs(i + 1, j, n, m, length, cum, best, path, visited, board);
-    }
-
-    if (i - 1 >= 0 && !visited[i - 1][j]) {
-        cum += 'U';
-        length += 1;
-        dfs(i - 1, j, n, m, length, cum, best, path, visited, board);
-    }
-
-    if (j + 1 < m && !visited[i][j + 1]) {
-        cum += 'R';
-        length += 1;
-        dfs(i, j + 1, n, m, length, cum, best, path, visited, board);
-    }
-
-    if (j - 1 >= 0 && !visited[i][j - 1]) {
-        cum += 'L';
-        length += 1;
-        dfs(i, j - 1, n, m, length, cum, best, path, visited, board);
+    if (the_queue.empty()) {
+        cout << "NO\n";
+    } else {
+        cout << "YES\n";
     }
 }
