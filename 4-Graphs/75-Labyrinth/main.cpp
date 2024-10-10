@@ -2,7 +2,8 @@
 
 using namespace std;
 
-void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visited, vector<vector<int>> &distance) {
+void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visited, vector<vector<int>> &distance,
+         vector<vector<char>> &step) {
     queue<pair<int, int>> q;
     visited[i][j] = true;
     distance[i][j] = 0;
@@ -10,14 +11,20 @@ void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visite
     p.first = i, p.second = j;
     q.push(p);
     int n = board.size(), m = board[0].size();
-
-    while (!q.empty()) {
+    int k = 0, r = 0;
+    while (!q.empty() && (board[k][r] != 'B')) {
         pair<int, int> node = q.front();
+        if (board[node.first][node.second] == 'B') {
+            k = node.first;
+            r = node.second;
+            continue;
+        }
         q.pop();
         if (node.first + 1 < n && !visited[node.first + 1][node.second] && board[node.first + 1][node.second] != '#') {
             pair<int, int> a = {node.first + 1, node.second};
             q.push(a);
             visited[node.first + 1][node.second] = true;
+            step[node.first + 1][node.second] = 'D';
             distance[node.first + 1][node.second] = distance[node.first][node.second] + 1;
         }
 
@@ -25,6 +32,7 @@ void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visite
             pair<int, int> a = {node.first - 1, node.second};
             q.push(a);
             visited[node.first - 1][node.second] = true;
+            step[node.first - 1][node.second] = 'U';
             distance[node.first - 1][node.second] = distance[node.first][node.second] + 1;
         }
 
@@ -33,6 +41,7 @@ void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visite
             pair<int, int> a = {node.first, node.second - 1};
             q.push(a);
             visited[node.first][node.second - 1] = true;
+            step[node.first][node.second - 1] = 'L';
             distance[node.first][node.second - 1] = distance[node.first][node.second] + 1;
         }
 
@@ -40,6 +49,7 @@ void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visite
             pair<int, int> a = {node.first, node.second + 1};
             q.push(a);
             visited[node.first][node.second + 1] = true;
+            step[node.first][node.second + 1] = 'R';
             distance[node.first][node.second + 1] = distance[node.first][node.second] + 1;
         }
 
@@ -47,16 +57,28 @@ void bfs(int i, int j, vector<vector<char>> &board, vector<vector<bool>> &visite
 
 }
 
-int main() {
+void get_path(int i, int j, stack<char> &path, vector<vector<char>> &step) {
+    if (step[i][j] != 'A') {
+        char letter = step[i][j];
+        path.push(letter);
+        if (letter == 'R') {
+            get_path(i, j - 1, path, step);
+        } else if (letter == 'L') {
+            get_path(i, j + 1, path, step);
+        } else if (letter == 'U') {
+            get_path(i + 1, j, path, step);
+        } else if (letter == 'D') {
+            get_path(i - 1, j, path, step);
+        }
+    }
+}
 
+int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n = 0;
-    int m = 0;
-
-    cin >> n;
-    cin >> m;
+    int n = 0, m = 0;
+    cin >> n >> m;
 
     vector<vector<char>> board(n);
     vector<vector<bool>> visited(n);
@@ -73,28 +95,31 @@ int main() {
         }
     }
 
+    int a = 0, b = 0;
+    vector<vector<char>> step = board;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (board[i][j] == 'A') {
-                // Throw the bfs
-                bfs(i, j, board, visited, distance);
-                break;
+                bfs(i, j, board, visited, distance, step);
+            } else if (board[i][j] == 'B') {
+                a = i, b = j;
             }
         }
     }
 
-    int a = 0;
-    int b = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (board[i][j] == 'B') {
-                a = i;
-                b = j;
-                break;
-            }
+    int final_distance = distance[a][b];
+    if (final_distance != 0) {
+        cout << "YES\n";
+        cout << final_distance << "\n";
+        stack<char> path;
+        get_path(a, b, path, step);;
+        while (!path.empty()) {
+            cout << path.top();
+            path.pop();
         }
+    } else {
+        cout << "NO\n";
     }
 
-    cout << distance[a][b] << "\n";
     return 0;
 }
