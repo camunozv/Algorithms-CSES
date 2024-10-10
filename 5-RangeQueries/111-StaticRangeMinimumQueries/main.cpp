@@ -15,13 +15,20 @@ int my_min(int i, int k, vector<int> &base_arr) {
 
 vector<int> build(vector<int> &base_arr, int &range_size) {
     int i = 0, k = i + range_size - 1;
-    vector<int> return_arr(base_arr.size(), 0);
+    vector<int> return_arr(base_arr.size(), INT_MAX);
     while (k < base_arr.size()) {
         return_arr[i] = my_min(i, k, base_arr);
         i++;
         k = i + range_size - 1;
     }
     return return_arr;
+}
+
+int query(int a, int b, vector<vector<int>> &sparse_matrix) {
+    int length = b - a + 1;
+    int level = (int) log2(length);
+    int min_number = min(sparse_matrix[level][a], sparse_matrix[level][length / 2]);
+    return min_number;
 }
 
 int main() {
@@ -47,11 +54,16 @@ int main() {
         range_size *= 2;
     }
 
-    for(int i = 0; i < sparse_size + 1; i++) {
-        for(int j = 0; j < n; j++) {
-            cout << sparse_table[i][j] << " ";
+    int r = 0;
+    int a = 0, b = 0;
+    while (r < q) {
+        cin >> a >> b;
+        if (a == b) {
+            cout << sparse_table[0][a - 1] << "\n";
+        } else {
+            cout << query(a - 1, b - 1, sparse_table) << "\n";
         }
-        cout << "\n";
+        r++;
     }
 
     return 0;
