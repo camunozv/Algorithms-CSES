@@ -21,3 +21,6 @@ CMakeLists.txt
 
 # makebuild
 cmake-build-debug/
+
+# executable binary file
+main
