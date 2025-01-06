@@ -8,7 +8,7 @@ vector<lli> build(const vector<lli> &numbers);
 
 int main() {
 
-
+    // jpñapejfe
     int n = 0;
     int q = 0;
 
